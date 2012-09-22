@@ -1,0 +1,5 @@
+<% auth = request.env['omniauth.auth'] %>
+<p>Contents of omniauth.auth:<p>
+<pre>
+<%= auth.to_yaml %>
+</pre>
