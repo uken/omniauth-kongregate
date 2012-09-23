@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Allows applications to get the kongregate id and username}
   gem.homepage      = ""
 
-  gem.files         = `git ls-files`.split($\)
+  gem.files         = Dir["{lib}/**/*"] + ["Rakefile", "README.md"]
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "omniauth-kongregate"
