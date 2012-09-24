@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["chester@uken.com"]
   gem.description   = %q{OmniAuth Strategy for Kongregate}
   gem.summary       = %q{Allows applications to get the kongregate id and username}
-  gem.homepage      = ""
+  gem.homepage      = "http://github.com/uken/omniauth-kongregate"
 
   gem.files         = Dir["{lib}/**/*"] + ["Rakefile", "README.md"]
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
