@@ -1,4 +1,4 @@
-# OmniAuth::Kongregate
+# OmniAuth::Kongregate ![CI status](https://secure.travis-ci.org/uken/omniauth-kongregate.png)
 
 OmniAuth strategy for [Kongregate](http://www.kongregate.com) authentication
 
