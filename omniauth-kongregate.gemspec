@@ -15,9 +15,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Omniauth::Kongregate::VERSION
 
-  gem.add_dependency "omniauth"
-  gem.add_development_dependency "webmock"
-  gem.add_development_dependency "rspec-rails"
+  gem.add_dependency "omniauth", "~> 1.1.1"
+  gem.add_development_dependency "webmock", "~> 1.9.0"
+  gem.add_development_dependency "rspec-rails", "~> 2.0"
   gem.add_development_dependency "capybara"
   gem.add_development_dependency "growl"
   gem.add_development_dependency "guard"
