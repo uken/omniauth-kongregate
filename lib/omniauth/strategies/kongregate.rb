@@ -2,6 +2,7 @@ require 'omniauth'
 require 'net/http'
 require 'uri'
 require 'json'
+require "digest"
 
 module OmniAuth
   module Strategies
@@ -18,9 +19,10 @@ module OmniAuth
       end
 
       def callback_phase
-        @k_response = verify_kongregate_auth(request[:user_id], request[:game_auth_token])
-        return fail!(:invalid_credentials) unless authenticated?
-        super
+		  @k_response = guest_access? ? guest_response : kongregate_auth
+
+		  return fail!(:invalid_credentials) unless authenticated?
+		  super
       end
 
       uid { @k_response['user_id'] if authenticated? }
@@ -29,21 +31,34 @@ module OmniAuth
 
       private
 
+	  def guest_response
+		  { "success" => true, "username" => "guest", "user_id" => generate_guest_user_id }
+	  end
+
+	  #starting with g_ helps to identify guest user keys
+	  def generate_guest_user_id
+		  "g_" + Digest::MD5.hexdigest("#{request[:game_auth_token]} + #{Time.now.to_i} + #{rand(1..5000)}")
+	  end
+
+	  def guest_access?
+		  request[:user_id] == "0"
+	  end
+
       def authenticated?
         @k_response && @k_response['success']
       end
 
-      def verify_kongregate_auth(user_id, game_auth_token)
+      def kongregate_auth
         uri = URI.parse('http://www.kongregate.com/api/authenticate.json')
         uri.query = URI.encode_www_form({
-          :user_id => user_id,
-          :game_auth_token => game_auth_token,
+          :user_id => request[:user_id],
+          :game_auth_token => request[:game_auth_token],
           :api_key => options.api_key
         })
         begin
           response = Net::HTTP.get_response(uri)
           log :debug, "Kongregate HTTP: #{response.code} - #{response.body}"
-          JSON.parse(response.body)
+          JSON.parse response.body
         rescue Exception => e
           fail!(:kongregate_query_error, e)
           nil

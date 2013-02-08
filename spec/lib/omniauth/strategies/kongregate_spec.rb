@@ -35,20 +35,50 @@ describe 'Kongregate Strategy' do
     let :request_params do
       {
         :user_id => '123456',
-        :game_auth_token => 'SOME_AUTH_TOKEN'
+        :game_auth_token => 'SOME_AUTH_TOKEN',
+		:api_key => 'SOME_API_KEY'
       }
     end
 
     before :each do
       WebMock.reset!
-      expected_params = request_params.merge({ :api_key => 'SOME_API_KEY' })
-      @kongregate_api = stub_request(:get, KONGREGATE_URL).with(:query => hash_including(expected_params))
+      @kongregate_api = stub_request(:get, KONGREGATE_URL).with(:query => hash_including(request_params))
     end
 
     it 'should pass the parameters and the API key when calling Kongregate' do
       strategy.callback_phase
       @kongregate_api.should have_been_requested
     end
+
+	context 'guest access' do
+		let :request_params do
+			{
+				:user_id => '0',
+				:game_auth_token => 'SOME_AUTH_TOKEN',
+				:api_key => 'SOME_API_KEY'
+			}
+		end
+
+		it "should bypass kongregate authentication request" do
+		  strategy.callback_phase
+		  @kongregate_api.should_not have_been_requested
+		end
+
+		it "should set username as guest" do
+			strategy.callback_phase
+			strategy.extra[:username] == "guest"
+		end
+
+		it "should set the uid" do
+			strategy.callback_phase
+			strategy.uid.should_not be_nil
+		end
+
+		it 'should not throw an error' do
+			strategy.should_not_receive(:fail!)
+			strategy.callback_phase
+		end
+	end
 
     context 'valid authentication' do
       before do
@@ -80,7 +110,6 @@ describe 'Kongregate Strategy' do
         strategy.should_receive(:fail!).with(:invalid_credentials)
         strategy.callback_phase
       end
-
     end
   end
 end
