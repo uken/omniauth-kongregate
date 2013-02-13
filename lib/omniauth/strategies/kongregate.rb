@@ -19,10 +19,10 @@ module OmniAuth
       end
 
       def callback_phase
-		  @k_response = guest_access? ? guest_response : kongregate_auth
+        @k_response = guest_access? ? guest_response : kongregate_auth
 
-		  return fail!(:invalid_credentials) unless authenticated?
-		  super
+        return fail!(:invalid_credentials) unless authenticated?
+        super
       end
 
       uid { @k_response['user_id'] if authenticated? }
@@ -31,18 +31,18 @@ module OmniAuth
 
       private
 
-	  def guest_response
-		  { "success" => true, "username" => "guest", "user_id" => generate_guest_user_id }
-	  end
+      def guest_response
+        { "success" => true, "username" => "guest", "user_id" => generate_guest_user_id }
+      end
 
-	  #starting with g_ helps to identify guest user keys
-	  def generate_guest_user_id
-		  "g_" + Digest::MD5.hexdigest("#{request[:game_auth_token]} + #{Time.now.to_i} + #{rand(1..5000)}")
-	  end
+      #starting with g_ helps to identify guest user keys
+      def generate_guest_user_id
+        "g_" + Digest::MD5.hexdigest("#{request[:game_auth_token]} + #{Time.now.to_i} + #{rand(1..5000)}")
+      end
 
-	  def guest_access?
-		  request[:user_id] == "0"
-	  end
+      def guest_access?
+        request[:user_id] == "0"
+      end
 
       def authenticated?
         @k_response && @k_response['success']

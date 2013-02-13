@@ -36,7 +36,7 @@ describe 'Kongregate Strategy' do
       {
         :user_id => '123456',
         :game_auth_token => 'SOME_AUTH_TOKEN',
-		:api_key => 'SOME_API_KEY'
+        :api_key => 'SOME_API_KEY'
       }
     end
 
@@ -50,35 +50,35 @@ describe 'Kongregate Strategy' do
       @kongregate_api.should have_been_requested
     end
 
-	context 'guest access' do
-		let :request_params do
-			{
-				:user_id => '0',
-				:game_auth_token => 'SOME_AUTH_TOKEN',
-				:api_key => 'SOME_API_KEY'
-			}
-		end
+    context 'guest access' do
+      let :request_params do
+        {
+          :user_id => '0',
+          :game_auth_token => 'SOME_AUTH_TOKEN',
+          :api_key => 'SOME_API_KEY'
+        }
+      end
 
-		it "should bypass kongregate authentication request" do
-		  strategy.callback_phase
-		  @kongregate_api.should_not have_been_requested
-		end
+      it "should bypass kongregate authentication request" do
+        strategy.callback_phase
+        @kongregate_api.should_not have_been_requested
+      end
 
-		it "should set username as guest" do
-			strategy.callback_phase
-			strategy.extra[:username] == "guest"
-		end
+      it "should set username as guest" do
+        strategy.callback_phase
+        strategy.extra[:username] == "guest"
+      end
 
-		it "should set the uid" do
-			strategy.callback_phase
-			strategy.uid.should_not be_nil
-		end
+      it "should set the uid" do
+        strategy.callback_phase
+        strategy.uid.should_not be_nil
+      end
 
-		it 'should not throw an error' do
-			strategy.should_not_receive(:fail!)
-			strategy.callback_phase
-		end
-	end
+      it 'should not throw an error' do
+        strategy.should_not_receive(:fail!)
+        strategy.callback_phase
+      end
+    end
 
     context 'valid authentication' do
       before do
