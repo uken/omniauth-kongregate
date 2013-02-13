@@ -2,7 +2,7 @@ require 'omniauth'
 require 'net/http'
 require 'uri'
 require 'json'
-require "digest"
+require "securerandom"
 
 module OmniAuth
   module Strategies
@@ -35,9 +35,8 @@ module OmniAuth
         { "success" => true, "username" => "guest", "user_id" => generate_guest_user_id }
       end
 
-      #starting with g_ helps to identify guest user keys
       def generate_guest_user_id
-        "g_" + Digest::MD5.hexdigest("#{request[:game_auth_token]} + #{Time.now.to_i} + #{rand(1..5000)}")
+        SecureRandom.uuid
       end
 
       def guest_access?
