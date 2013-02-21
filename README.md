@@ -19,10 +19,15 @@ If the token is valid, `/auth/kongregate/callback` will fire. You can get the va
     auth = request.env['omniauth.auth']
     user_id = auth.uid
     username = auth.extras['username']
+    
+### Guest Access
+
+Guest access (users that are not logged in on Kongregate) will result in an auto-generated, non-numeric value in `user_id` (so it won't clash with `kongregate_user_id`), prefixed with "g_", so applications have a set of temporary credentials until the user decides to authenticate.
 
 ## TODO
 
 - Display the Kongregate login form for non-authenticated users
+
 
 ## Contributing
 
@@ -31,3 +36,7 @@ If the token is valid, `/auth/kongregate/callback` will fire. You can get the va
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Special Thanks
+
+- [pmariano](http://github.com/uken/pmariano), for implementing guest access.

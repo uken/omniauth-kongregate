@@ -2,8 +2,8 @@
 require File.expand_path('../lib/omniauth-kongregate/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Chester / Uken Games"]
-  gem.email         = ["chester@uken.com"]
+  gem.authors       = ["Chester (chesterbr) / Uken Games", "Pedro Mariano (pmariano)"]
+  gem.email         = ["chester@uken.com", "pmariano@"]
   gem.description   = %q{OmniAuth Strategy for Kongregate}
   gem.summary       = %q{Allows applications to get the kongregate id and username}
   gem.homepage      = "http://github.com/uken/omniauth-kongregate"
