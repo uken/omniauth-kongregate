@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = Omniauth::Kongregate::VERSION
 
   gem.add_dependency "omniauth", "~> 1.1.1"
-  gem.add_development_dependency "bundler","~> 1.3.0"
+  gem.add_development_dependency "bundler","~> 1.2.3"
   gem.add_development_dependency "webmock", "~> 1.9.0"
   gem.add_development_dependency "rspec-rails", "~> 2.0"
   gem.add_development_dependency "capybara"
