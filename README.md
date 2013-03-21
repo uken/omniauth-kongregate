@@ -39,4 +39,4 @@ Guest access (users that are not logged in on Kongregate) will result in an auto
 
 ## Special Thanks
 
-- [pmariano](http://github.com/uken/pmariano), for implementing guest access.
+- [pmariano](http://github.com/pmariano), for implementing guest access.
